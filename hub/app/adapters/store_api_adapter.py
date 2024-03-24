@@ -14,11 +14,17 @@ class StoreApiAdapter(StoreGateway):
         self.api_base_url = api_base_url
 
     def save_data(self, processed_agent_data_batch: List[ProcessedAgentData]):
-        """
-        Save the processed road data to the Store API.
-        Parameters:
-            processed_agent_data_batch (dict): Processed road data to be saved.
-        Returns:
-            bool: True if the data is successfully saved, False otherwise.
-        """
-        # Implement it
+        url = f"{self.api_base_url}/processed_agent_data"
+        data = [data.dict() for data in processed_agent_data_batch]
+
+        # Серіалізувати об'єкти datetime до рядків
+        for item in data:
+            item['agent_data']['timestamp'] = item['agent_data']['timestamp'].isoformat()
+
+        response = requests.post(url, json=data)
+
+        if response.status_code != 200:
+            # Handle error if needed
+            print(f"Failed to save data: {response.status_code}, {response.text}")
+        else:
+            print("Data saved successfully.")

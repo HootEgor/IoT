@@ -24,3 +24,10 @@ BATCH_SIZE = try_parse_int(os.environ.get("BATCH_SIZE")) or 20
 MQTT_BROKER_HOST = os.environ.get("MQTT_BROKER_HOST") or "localhost"
 MQTT_BROKER_PORT = try_parse_int(os.environ.get("MQTT_BROKER_PORT")) or 1883
 MQTT_TOPIC = os.environ.get("MQTT_TOPIC") or "processed_agent_data_topic"
+
+# Configuration for pgAdmin SERVER mode
+PGADMIN_SERVER_MODE = True
+PGADMIN_SERVER_HOST = "localhost"
+PGADMIN_SERVER_PORT = 5050
+PGADMIN_SERVER_EMAIL = os.environ.get("PGADMIN_DEFAULT_EMAIL") or "admin@admin.com"
+PGADMIN_SERVER_PASSWORD = os.environ.get("PGADMIN_DEFAULT_PASSWORD") or "root"
