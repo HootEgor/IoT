@@ -63,7 +63,7 @@ def get_db():
         db.close()
 
 # CRUDL endpoints
-@app.post("/processed_agent_data/", response_model=ProcessedAgentDataInDB)
+@app.post("/processed_agent_data/", response_model=List[ProcessedAgentDataInDB])
 async def create_processed_agent_data(data: List[ProcessedAgentData], db: Session = Depends(get_db)):
     db_list = []
     for item in data:
@@ -76,10 +76,10 @@ async def create_processed_agent_data(data: List[ProcessedAgentData], db: Sessio
             longitude=item.agent_data.gps.longitude,
             timestamp=item.agent_data.timestamp,
         )
+        db.add(db_entry)
+        db.commit()
+        db.refresh(db_entry)
         db_list.append(db_entry)
-    db.add_all(db_list)
-    db.commit()
-    db.refresh(db_list)
     return db_list
 
 @app.get("/processed_agent_data/{processed_agent_data_id}", response_model=ProcessedAgentDataInDB)

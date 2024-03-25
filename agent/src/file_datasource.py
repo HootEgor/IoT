@@ -32,8 +32,7 @@ class FileDatasource:
         return AggregatedData(
             accelerometer=Accelerometer(accelerometer_data[0], accelerometer_data[1], accelerometer_data[2]),
             gps=Gps(gps_data[0], gps_data[1]),
-            parking=Parking(parking_data[0], Gps(parking_data[1], parking_data[2])),
-            time=time
+            timestamp=time
         )
 
     def read_accelerometer_data(self):
